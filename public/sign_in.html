@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登陆</title>
+</head>
+<body>
+    <form id="signInForm">
+        <div>
+            <label>用户名 <input type="text" name="name"></label>
+        </div>
+        <div>
+            <label>密码 <input type="password" name="password"></label>
+        </div>
+        <div>
+            <button type="submit">登录</button>
+        </div>
+    </form>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const $form = $('#signInForm')
+        $form.on('submit',(e)=>{
+        //阻止默认事件
+        e.preventDefault()
+        //找到用户名的值
+        const name = $form.find('input[name=name]').val()
+        //找到密码的值
+        const password = $form.find('input[name=password]').val()
+        //发ajax请求，提交
+        $.ajax({
+            //把默认的GET设置成POST
+            method : 'POST',
+            url : '/sign_in',//设置url
+            contentType : 'text/json; charset=UTF-8',//设置contentType
+            data : JSON.stringify({name,password})//把接受的对象变成字符串数据
+        }).then(()=>{
+            alert('登录成功')
+            location.href = '/home.html'
+        },()=>{})
+    })
+    </script>
+</body>
+</html>
